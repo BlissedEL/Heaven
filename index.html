@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebAssembly Example</title>
+</head>
+<body>
+    <script>
+        (async () => {
+            const wasmModuleUrl = 'consonance_bg.wasm';
+            const wasmModuleResponse = await fetch(wasmModuleUrl);
+            const wasmArrayBuffer = await wasmModuleResponse.arrayBuffer();
+            const wasmModule = await WebAssembly.instantiate(wasmArrayBuffer);
+
+            const { Consonance, MirrorType } = wasmModule.instance.exports;
+
+            const consonance = Consonance.new();
+            consonance.point(MirrorType.Inspiration);
+            consonance.click(42);
+            
+            // Assuming there's a method to directly fetch the insight value or it's accessible as a property
+            console.log('Insight:', consonance.insight);
+        })();
+    </script>
+</body>
+</html>
